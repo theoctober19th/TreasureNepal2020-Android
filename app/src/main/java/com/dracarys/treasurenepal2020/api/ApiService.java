@@ -1,4 +1,5 @@
 package com.dracarys.treasurenepal2020.api;
+import com.dracarys.treasurenepal2020.entities.LeaderBoard;
 import com.dracarys.treasurenepal2020.entities.Treasure;
 
 import java.util.List;
@@ -17,4 +18,7 @@ public interface ApiService {
     @GET("1atj9p")
     Call<Treasure> getTreasureById(@Query("format") String format,
                                    @Path("id") String id);
+
+    @GET("challenges/")
+    Call<List<LeaderBoard>> getLeaderBoards(@Query("format")String format);
 }

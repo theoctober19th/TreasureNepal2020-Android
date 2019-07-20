@@ -55,6 +55,7 @@ public class DrawerActivity extends AppCompatActivity {
     private static final int DRAWER_ITEM_HUNT_TREASURE_CODE = 2;
     private static final int DRAWER_ITEM_FIND_TREASURE_CODE = 3;
     private static final int DRAWER_ITEM_SEARCH_CODE = 4;
+    private static final int DRAWER_ITEM_SCAN_CODE = 5;
 
     //save our header or result
     private AccountHeader headerResult = null;
@@ -141,6 +142,7 @@ public class DrawerActivity extends AppCompatActivity {
                         new PrimaryDrawerItem().withName(R.string.drawer_item_hunt_treasure).withDescription(R.string.drawer_item_hunt_treasure_desc).withIcon(FontAwesome.Icon.faw_map).withIdentifier(DRAWER_ITEM_HUNT_TREASURE_CODE).withSelectable(false),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_find_treasure).withDescription(R.string.drawer_item_find_treasure_desc).withIcon(FontAwesome.Icon.faw_list).withIdentifier(DRAWER_ITEM_FIND_TREASURE_CODE).withSelectable(false),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_search).withDescription(R.string.drawer_item_search_desc).withIcon(FontAwesome.Icon.faw_search).withIdentifier(DRAWER_ITEM_SEARCH_CODE).withSelectable(false),
+                        new PrimaryDrawerItem().withName(R.string.drawer_item_scan).withDescription(R.string.drawer_item_scan_desc).withIcon(FontAwesome.Icon.faw_search).withIdentifier(DRAWER_ITEM_SCAN_CODE).withSelectable(false),
 
 //                        new PrimaryDrawerItem().withName(R.string.drawer_item_multi_drawer).withDescription(R.string.drawer_item_multi_drawer_desc).withIcon(FontAwesome.Icon.faw_gamepad).withIdentifier(3).withSelectable(false),
 //                        new PrimaryDrawerItem().withName(R.string.drawer_item_non_translucent_status_drawer).withDescription(R.string.drawer_item_non_translucent_status_drawer_desc).withIcon(FontAwesome.Icon.faw_eye).withIdentifier(4).withSelectable(false).withBadgeStyle(new BadgeStyle().withTextColor(Color.WHITE).withColorRes(R.color.md_red_700)),
@@ -190,7 +192,10 @@ public class DrawerActivity extends AppCompatActivity {
                             } else if (drawerItem.getIdentifier() == DRAWER_ITEM_SEARCH_CODE) {
                                 intent = new Intent(DrawerActivity.this, SearchActivity.class);
 
-                            }/*else if (drawerItem.getIdentifier() == 2) {
+                            } else if (drawerItem.getIdentifier() == DRAWER_ITEM_SCAN_CODE) {
+                                intent = new Intent(DrawerActivity.this, QRCodeActivity.class);
+                            }
+                            /*else if (drawerItem.getIdentifier() == 2) {
                                 intent = new Intent(DrawerActivity.this, ActionBarActivity.class);
                             } else if (drawerItem.getIdentifier() == 3) {
                                 intent = new Intent(DrawerActivity.this, MultiDrawerActivity.class);

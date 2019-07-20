@@ -9,4 +9,6 @@
     <string name="drawer_item_find_treasure_desc">See your nearby treasure spots :D</string>
     <string name="drawer_item_search">Search</string>
     <string name="drawer_item_search_desc">Search By Name / Address</string>
+    <string name="drawer_item_scan">Scan QR</string>
+    <string name="drawer_item_scan_desc">Scan Treasure QR Code</string>
 </resources>

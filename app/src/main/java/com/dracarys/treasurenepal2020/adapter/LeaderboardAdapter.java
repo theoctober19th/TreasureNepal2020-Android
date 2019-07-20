@@ -58,12 +58,12 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
 
     @Override
     public void onBindViewHolder(CustomViewHolder holder, int position) {
-        holder.txtName.setText("Bikalpa DHakal"/* TODO add Name Here */);
-        holder.txtPoints.setText("200"/* TODO add Name Here */);
+        holder.txtName.setText("Bikalpa DHakal"/* dataList.get(position).getName */);
+        holder.txtPoints.setText("200"/* TdataList.get(position).getPoints */);
 
         Picasso.Builder builder = new Picasso.Builder(context);
         builder.downloader(new OkHttp3Downloader(context));
-        builder.build().load("" /*TODO add image here */)
+        builder.build().load( dataList.get(position).getImage())
                 .placeholder((R.drawable.ic_launcher_background))
                 .error(R.drawable.ic_launcher_background)
                 .into(holder.imgView);
