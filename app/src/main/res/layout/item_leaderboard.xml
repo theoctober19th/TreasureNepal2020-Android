@@ -4,10 +4,10 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="8dp">
+    android:padding="16dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/search_image"
+        android:id="@+id/leader_image"
         android:layout_width="48dp"
         android:layout_height="48dp"
         app:layout_constraintTop_toTopOf="parent"
@@ -16,25 +16,27 @@
 
     <TextView
         android:layout_marginLeft="8dp"
-        android:id="@+id/search_title"
+        android:id="@+id/leader_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toRightOf="@id/leader_image"
         android:text="adsf"
         android:fontFamily="@font/nunito_sans_semibold"
-        android:textSize="16sp"/>
+        android:textSize="16sp"
+        android:gravity="center_vertical"/>
 
     <TextView
         android:layout_marginLeft="8dp"
-        android:id="@+id/search_address"
+        android:id="@+id/leader_score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/search_title"
-        app:layout_constraintLeft_toRightOf="@id/leader_image"
-        android:text="adsf"
-        android:fontFamily="@font/nunito_sans"
-        android:textSize="14sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="100"
+        android:fontFamily="@font/nunito_sans_semibold"
+        android:textSize="18sp"
+        android:textColor="@color/colorAccent"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

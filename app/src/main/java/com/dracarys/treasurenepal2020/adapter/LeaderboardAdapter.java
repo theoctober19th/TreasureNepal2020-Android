@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dracarys.treasurenepal2020.R;
-import com.dracarys.treasurenepal2020.entities.Treasure;
+import com.dracarys.treasurenepal2020.entities.LeaderBoard;
 import com.jakewharton.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
 
@@ -21,12 +21,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by praka on 12/24/2017.
  */
 
-public class TreasureAdapter extends RecyclerView.Adapter<TreasureAdapter.CustomViewHolder> {
+public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.CustomViewHolder> {
 
-    private List<Treasure> dataList;
+    private List<LeaderBoard> dataList;
     private Context context;
 
-    public TreasureAdapter(Context context,List<Treasure> dataList){
+    public LeaderboardAdapter(Context context, List<LeaderBoard> dataList){
         this.context = context;
         this.dataList = dataList;
     }
@@ -35,17 +35,17 @@ public class TreasureAdapter extends RecyclerView.Adapter<TreasureAdapter.Custom
 
         public final View mView;
 
-        TextView txtTitle;
-        TextView txtAddress;
+        TextView txtName;
+        TextView txtPoints;
         private CircleImageView imgView;
 
         CustomViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
 
-            txtTitle = mView.findViewById(R.id.search_title);
-            txtAddress = mView.findViewById(R.id.search_address);
-            imgView = mView.findViewById(R.id.search_image);
+            txtName = mView.findViewById(R.id.leader_name);
+            txtPoints = mView.findViewById(R.id.leader_score);
+            imgView = mView.findViewById(R.id.leader_image);
         }
     }
 
@@ -58,12 +58,12 @@ public class TreasureAdapter extends RecyclerView.Adapter<TreasureAdapter.Custom
 
     @Override
     public void onBindViewHolder(CustomViewHolder holder, int position) {
-        holder.txtTitle.setText(dataList.get(position).getName());
-        holder.txtAddress.setText(dataList.get(position).getAddress());
+        holder.txtName.setText("Bikalpa DHakal"/* TODO add Name Here */);
+        holder.txtPoints.setText("200"/* TODO add Name Here */);
 
         Picasso.Builder builder = new Picasso.Builder(context);
         builder.downloader(new OkHttp3Downloader(context));
-        builder.build().load(dataList.get(position).getImage())
+        builder.build().load("" /*TODO add image here */)
                 .placeholder((R.drawable.ic_launcher_background))
                 .error(R.drawable.ic_launcher_background)
                 .into(holder.imgView);
