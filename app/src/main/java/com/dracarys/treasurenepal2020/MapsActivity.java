@@ -8,12 +8,15 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
+import com.dracarys.treasurenepal2020.utils.Utils;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mikepenz.aboutlibraries.Libs;
@@ -34,8 +37,11 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
+import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.OnItemClickListener;
+import com.orhanobut.dialogplus.ViewHolder;
 
-public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
     private static final int PROFILE_SETTING = 100000;
     private static final int DRAWER_ITEM_HOME_CODE = 1;
     private static final int DRAWER_ITEM_HUNT_TREASURE_CODE = 2;
@@ -72,7 +78,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         searchFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                //mMap.clear();
+                addRandomMarkers();
             }
         });
 
@@ -97,6 +104,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.setOnMarkerClickListener(MapsActivity.this);
 
         takeMeWhereIAm();
     }
@@ -284,5 +292,50 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
 
+    public void showTreasureInfoDialog(String title){
+        DialogPlus dialog = DialogPlus.newDialog(this)
+                .setContentHolder(new ViewHolder(R.layout.treasure_info))
+                .setOnItemClickListener(new OnItemClickListener() {
+                    @Override
+                    public void onItemClick(DialogPlus dialog, Object item, View view, int position) {
+                        Toast.makeText(MapsActivity.this, "Clicked!", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setExpanded(true)  // This will enable the expand feature, (similar to android L share dialog)
+                .create();
+        dialog.show();
+
+    }
+
+    public void addRandomMarkers(){
+        addLocationMarker(27.6867787,85.3294549, "ABC", "1");
+        addLocationMarker(27.683043, 85.321209, "XYZ", "2");
+        addLocationMarker(27.674900, 85.337569, "MNO", "3");
+    }
+
+    public void addLocationMarker(/*Treasure treasure*/ double latitude, double longitude, String title, String tag){
+        // Creating a marker
+        MarkerOptions markerOptions = new MarkerOptions().icon(Utils.bitmapDescriptorFromVector(this, R.drawable.ic_monetization_on_red_24dp)).title(title);
+
+        LatLng latLng = new LatLng(latitude, longitude);
+        // Setting the position for the marker
+        markerOptions.position(latLng);
+
+        // Animating to the touched position
+        // mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+
+        // Placing a marker on the touched position
+        mMap.addMarker(markerOptions).setTag(tag);
+    }
+
+    @Override
+    public boolean onMarkerClick(final Marker marker) {
+
+        //marker.getId();
+        if(!marker.getTitle().equals("Your Location")){
+            showTreasureInfoDialog(marker.getTitle());
+        }
+        return false;
+    }
 
 }

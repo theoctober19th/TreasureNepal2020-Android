@@ -80,7 +80,7 @@ public class DrawerActivity extends AppCompatActivity {
             }
         });
 
-        loading = findViewById(R.id.loadingProgressBar);
+        //loading = findViewById(R.id.loadingProgressBar);
     }
 
     public void createDrawer(Bundle savedInstanceState){
