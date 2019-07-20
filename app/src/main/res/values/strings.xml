@@ -7,4 +7,6 @@
     <string name="drawer_item_hunt_treasure_desc">See your nearby treasure spots :D</string>
     <string name="drawer_item_find_treasure">Find Treasures</string>
     <string name="drawer_item_find_treasure_desc">See your nearby treasure spots :D</string>
+    <string name="drawer_item_search">Search</string>
+    <string name="drawer_item_search_desc">Search By Name / Address</string>
 </resources>

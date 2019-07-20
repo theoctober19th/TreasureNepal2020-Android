@@ -15,9 +15,14 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
-        <activity android:name=".TreasureInfoActivity"></activity>
-        <activity android:name=".ListActivity" />
-        <activity android:name=".SearchActivity" />
+        <activity android:name=".LeaderboardActivity"
+            android:theme="@style/MaterialDrawerTheme.Light.DarkToolbar"></activity>
+        <activity android:name=".TreasureInfoActivity"
+            android:theme="@style/MaterialDrawerTheme.Light.DarkToolbar"/>
+        <activity android:name=".ListActivity"
+            android:theme="@style/MaterialDrawerTheme.Light.DarkToolbar"/>
+        <activity android:name=".SearchActivity"
+            android:theme="@style/MaterialDrawerTheme.Light.DarkToolbar"/>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").

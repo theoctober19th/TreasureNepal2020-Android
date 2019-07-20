@@ -2,6 +2,7 @@ package com.dracarys.treasurenepal2020;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.fonts.Font;
 import android.os.Bundle;
 import android.view.View;
 import com.mikepenz.materialdrawer.AccountHeader;
@@ -53,6 +54,7 @@ public class DrawerActivity extends AppCompatActivity {
     private static final int DRAWER_ITEM_HOME_CODE = 1;
     private static final int DRAWER_ITEM_HUNT_TREASURE_CODE = 2;
     private static final int DRAWER_ITEM_FIND_TREASURE_CODE = 3;
+    private static final int DRAWER_ITEM_SEARCH_CODE = 4;
 
     //save our header or result
     private AccountHeader headerResult = null;
@@ -134,10 +136,11 @@ public class DrawerActivity extends AppCompatActivity {
                 .withAccountHeader(headerResult) //set the AccountHeader we created earlier for the header
                 .addDrawerItems(
                         new SectionDrawerItem().withName("Navigate"),
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_home).withDescription(R.string.drawer_item_home_desc).withIcon(GoogleMaterial.Icon.gmd_brightness_5).withIdentifier(DRAWER_ITEM_HOME_CODE).withSelectable(false),
+                        new PrimaryDrawerItem().withName(R.string.drawer_item_home).withDescription(R.string.drawer_item_home_desc).withIcon(FontAwesome.Icon.faw_home).withIdentifier(DRAWER_ITEM_HOME_CODE).withSelectable(false),
                         new SectionDrawerItem().withName("Treasure Hunt"),
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_hunt_treasure).withDescription(R.string.drawer_item_hunt_treasure_desc).withIcon(FontAwesome.Icon.faw_home).withIdentifier(DRAWER_ITEM_HUNT_TREASURE_CODE).withSelectable(false),
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_find_treasure).withDescription(R.string.drawer_item_find_treasure_desc).withIcon(FontAwesome.Icon.faw_home).withIdentifier(DRAWER_ITEM_FIND_TREASURE_CODE).withSelectable(false),
+                        new PrimaryDrawerItem().withName(R.string.drawer_item_hunt_treasure).withDescription(R.string.drawer_item_hunt_treasure_desc).withIcon(FontAwesome.Icon.faw_map).withIdentifier(DRAWER_ITEM_HUNT_TREASURE_CODE).withSelectable(false),
+                        new PrimaryDrawerItem().withName(R.string.drawer_item_find_treasure).withDescription(R.string.drawer_item_find_treasure_desc).withIcon(FontAwesome.Icon.faw_list).withIdentifier(DRAWER_ITEM_FIND_TREASURE_CODE).withSelectable(false),
+                        new PrimaryDrawerItem().withName(R.string.drawer_item_search).withDescription(R.string.drawer_item_search_desc).withIcon(FontAwesome.Icon.faw_search).withIdentifier(DRAWER_ITEM_SEARCH_CODE).withSelectable(false),
 
 //                        new PrimaryDrawerItem().withName(R.string.drawer_item_multi_drawer).withDescription(R.string.drawer_item_multi_drawer_desc).withIcon(FontAwesome.Icon.faw_gamepad).withIdentifier(3).withSelectable(false),
 //                        new PrimaryDrawerItem().withName(R.string.drawer_item_non_translucent_status_drawer).withDescription(R.string.drawer_item_non_translucent_status_drawer_desc).withIcon(FontAwesome.Icon.faw_eye).withIdentifier(4).withSelectable(false).withBadgeStyle(new BadgeStyle().withTextColor(Color.WHITE).withColorRes(R.color.md_red_700)),
@@ -182,7 +185,10 @@ public class DrawerActivity extends AppCompatActivity {
                                 intent = new Intent(DrawerActivity.this, MapsActivity.class);
 
                             } else if (drawerItem.getIdentifier() == DRAWER_ITEM_FIND_TREASURE_CODE) {
-                                intent = new Intent(DrawerActivity.this, MapsActivity.class);
+                                intent = new Intent(DrawerActivity.this, ListActivity.class);
+
+                            } else if (drawerItem.getIdentifier() == DRAWER_ITEM_SEARCH_CODE) {
+                                intent = new Intent(DrawerActivity.this, SearchActivity.class);
 
                             }/*else if (drawerItem.getIdentifier() == 2) {
                                 intent = new Intent(DrawerActivity.this, ActionBarActivity.class);
