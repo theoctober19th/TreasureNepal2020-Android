@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">TreasureNepal2020</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="drawer_item_home">Home</string>
+    <string name="drawer_item_home_desc">View your dashboard</string>
+    <string name="drawer_item_hunt_treasure">Hunt Treasures</string>
+    <string name="drawer_item_hunt_treasure_desc">Find New Treasures :D</string>
 </resources>
