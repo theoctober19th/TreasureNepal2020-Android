@@ -52,6 +52,7 @@ public class DrawerActivity extends AppCompatActivity {
     private static final int PROFILE_SETTING = 100000;
     private static final int DRAWER_ITEM_HOME_CODE = 1;
     private static final int DRAWER_ITEM_HUNT_TREASURE_CODE = 2;
+    private static final int DRAWER_ITEM_FIND_TREASURE_CODE = 3;
 
     //save our header or result
     private AccountHeader headerResult = null;
@@ -132,8 +133,12 @@ public class DrawerActivity extends AppCompatActivity {
                 .withItemAnimator(new AlphaCrossFadeAnimator())
                 .withAccountHeader(headerResult) //set the AccountHeader we created earlier for the header
                 .addDrawerItems(
+                        new SectionDrawerItem().withName("Navigate"),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_home).withDescription(R.string.drawer_item_home_desc).withIcon(GoogleMaterial.Icon.gmd_brightness_5).withIdentifier(DRAWER_ITEM_HOME_CODE).withSelectable(false),
+                        new SectionDrawerItem().withName("Treasure Hunt"),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_hunt_treasure).withDescription(R.string.drawer_item_hunt_treasure_desc).withIcon(FontAwesome.Icon.faw_home).withIdentifier(DRAWER_ITEM_HUNT_TREASURE_CODE).withSelectable(false),
+                        new PrimaryDrawerItem().withName(R.string.drawer_item_find_treasure).withDescription(R.string.drawer_item_find_treasure_desc).withIcon(FontAwesome.Icon.faw_home).withIdentifier(DRAWER_ITEM_FIND_TREASURE_CODE).withSelectable(false),
+
 //                        new PrimaryDrawerItem().withName(R.string.drawer_item_multi_drawer).withDescription(R.string.drawer_item_multi_drawer_desc).withIcon(FontAwesome.Icon.faw_gamepad).withIdentifier(3).withSelectable(false),
 //                        new PrimaryDrawerItem().withName(R.string.drawer_item_non_translucent_status_drawer).withDescription(R.string.drawer_item_non_translucent_status_drawer_desc).withIcon(FontAwesome.Icon.faw_eye).withIdentifier(4).withSelectable(false).withBadgeStyle(new BadgeStyle().withTextColor(Color.WHITE).withColorRes(R.color.md_red_700)),
 //                        new PrimaryDrawerItem().withName(R.string.drawer_item_advanced_drawer).withDescription(R.string.drawer_item_advanced_drawer_desc).withIcon(GoogleMaterial.Icon.gmd_adb).withIdentifier(5).withSelectable(false),
@@ -173,8 +178,10 @@ public class DrawerActivity extends AppCompatActivity {
                             Intent intent = null;
                             if (drawerItem.getIdentifier() == DRAWER_ITEM_HOME_CODE) {
                                 //intent = new Intent(DrawerActivity.this, MapsActivity.class);
-                            }
-                            if (drawerItem.getIdentifier() == DRAWER_ITEM_HUNT_TREASURE_CODE) {
+                            } else if (drawerItem.getIdentifier() == DRAWER_ITEM_HUNT_TREASURE_CODE) {
+                                intent = new Intent(DrawerActivity.this, MapsActivity.class);
+
+                            } else if (drawerItem.getIdentifier() == DRAWER_ITEM_FIND_TREASURE_CODE) {
                                 intent = new Intent(DrawerActivity.this, MapsActivity.class);
 
                             }/*else if (drawerItem.getIdentifier() == 2) {

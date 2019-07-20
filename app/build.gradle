@@ -49,4 +49,5 @@ dependencies {
     implementation 'com.victor:lib:1.0.4'
     implementation 'com.orhanobut:dialogplus:1.11@aar'
     implementation 'de.hdodenhof:circleimageview:3.0.0'
+    implementation 'com.github.mancj:MaterialSearchBar:0.8.2'
 }
