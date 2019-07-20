@@ -7,7 +7,9 @@ import androidx.fragment.app.FragmentActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dracarys.treasurenepal2020.utils.Utils;
@@ -304,6 +306,17 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .setExpanded(true)  // This will enable the expand feature, (similar to android L share dialog)
                 .create();
         dialog.show();
+
+        final View asdf = dialog.getHolderView();
+        TextView tv = asdf.findViewById(R.id.name_TextView);
+        tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MapsActivity.this, DrawerActivity.class);
+                startActivity(intent);
+            }
+        });
+       // landmarkEditNameView = (EditText) textEntryView.findViewById(R.id.landmark_name_dialog_edit);
 
     }
 
