@@ -255,7 +255,7 @@ public class DrawerActivity extends AppCompatActivity {
                             } else if (drawerItem.getIdentifier() == DRAWER_ITEM_SCAN_CODE) {
                                 intent = new Intent(DrawerActivity.this, QRCodeActivity.class);
                             }  else if (drawerItem.getIdentifier() == DRAWER_ITEM_LEADERBOARD_CODE) {
-                                intent = new Intent(DrawerActivity.this, QRCodeActivity.class);
+                                intent = new Intent(DrawerActivity.this, LeaderboardActivity.class);
                             }
                             /*else if (drawerItem.getIdentifier() == 2) {
                                 intent = new Intent(DrawerActivity.this, ActionBarActivity.class);

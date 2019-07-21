@@ -10,6 +10,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitClient {
 
     private static Retrofit retrofit;
+
+    //AWS SERVER IP ADDRESS
+    //This will probably be down by the time you test it due to 1 hr limit. If any problem arise, please use the local address instead.
+    //private static final String BASE_URL = "http://18.214.223.15:8000/";
+
+    //FOR LOCAL TESTING
     private static final String BASE_URL = "http://10.16.2.63:8000/";
 
     public static Retrofit getRetrofitInstance() {

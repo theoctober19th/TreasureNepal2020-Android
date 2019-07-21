@@ -37,7 +37,7 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
 
         TextView txtName;
         TextView txtPoints;
-        private CircleImageView imgView;
+        CircleImageView imgView;
 
         CustomViewHolder(View itemView) {
             super(itemView);
@@ -52,14 +52,14 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
     @Override
     public CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.item_treasure, parent, false);
+        View view = layoutInflater.inflate(R.layout.item_leaderboard, parent, false);
         return new CustomViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(CustomViewHolder holder, int position) {
-        holder.txtName.setText("Bikalpa DHakal"/* dataList.get(position).getName */);
-        holder.txtPoints.setText("200"/* TdataList.get(position).getPoints */);
+        holder.txtName.setText(dataList.get(position).getName());
+        holder.txtPoints.setText(dataList.get(position).getPoints());
 
         Picasso.Builder builder = new Picasso.Builder(context);
         builder.downloader(new OkHttp3Downloader(context));

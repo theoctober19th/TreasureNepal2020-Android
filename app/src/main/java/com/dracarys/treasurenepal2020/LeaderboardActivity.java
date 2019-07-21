@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -45,6 +46,7 @@ public class LeaderboardActivity extends AppCompatActivity {
             public void onResponse(Call<List<LeaderBoard>> call, Response<List<LeaderBoard>> response) {
 
                 leaderBoardProgressBar.setVisibility(View.GONE);
+                Log.d("BIKALPA", response.body().toString());
                 generateDataList(response.body());
 
             }
@@ -53,11 +55,13 @@ public class LeaderboardActivity extends AppCompatActivity {
             public void onFailure(Call<List<LeaderBoard>> call, Throwable t) {
 
                 leaderBoardProgressBar.setVisibility(View.GONE);
-                Toast.makeText(LeaderboardActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LeaderboardActivity.this, t.toString(), Toast.LENGTH_LONG).show();
+                //Toast.makeText(LeaderboardActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
 
             }
         });
     }
+
 
     private void initializeViews() {
         leaderboardRV = findViewById(R.id.leaderboard_recyclerview);

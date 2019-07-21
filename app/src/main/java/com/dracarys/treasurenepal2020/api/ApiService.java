@@ -30,6 +30,6 @@ public interface ApiService {
                                    @Query("format") String format
                                    );
 
-    @GET("challenges/")
+    @GET("leaderboards/")
     Call<List<LeaderBoard>> getLeaderBoards(@Query("format")String format);
 }
