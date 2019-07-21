@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitClient {
 
     private static Retrofit retrofit;
-    private static final String BASE_URL = "https://api.myjson.com/bins/";
+    private static final String BASE_URL = "http://10.16.2.63:8000/";
 
     public static Retrofit getRetrofitInstance() {
         if (retrofit == null) {

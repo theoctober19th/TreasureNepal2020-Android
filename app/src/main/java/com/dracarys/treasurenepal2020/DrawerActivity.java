@@ -80,7 +80,7 @@ public class DrawerActivity extends AppCompatActivity {
         scanNowButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(DrawerActivity.this, "JUST TAKE ME TO THAT CAMERA", Toast.LENGTH_SHORT).show();
+
             }
         });
 

@@ -346,6 +346,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         final View rootView = dialog.getHolderView();
 
         TextView treasureName = rootView.findViewById(R.id.treasure_name);
+        treasureName.setText(treasure.getName());
         treasureName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -354,7 +355,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
         TextView treasureAddress = rootView.findViewById(R.id.treasure_address);
+        treasureAddress.setText(treasure.getAddress());
         TextView treasurePoints = rootView.findViewById(R.id.treasure_points);
+        treasurePoints.setText(treasure.getPoints() + " Points");
         Button seeMoreBtn = rootView.findViewById(R.id.read_more_btn);
         seeMoreBtn.setOnClickListener(new View.OnClickListener() {
             @Override
