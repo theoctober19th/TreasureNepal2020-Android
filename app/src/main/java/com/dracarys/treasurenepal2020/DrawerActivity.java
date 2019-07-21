@@ -1,10 +1,18 @@
 package com.dracarys.treasurenepal2020;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.fonts.Font;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
+
+import com.dracarys.treasurenepal2020.api.ApiService;
+import com.dracarys.treasurenepal2020.api.RetrofitClient;
+import com.dracarys.treasurenepal2020.entities.LeaderBoard;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -21,6 +29,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mikepenz.aboutlibraries.Libs;
@@ -49,6 +58,12 @@ import com.victor.loading.book.BookLoading;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import java.util.prefs.Preferences;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class DrawerActivity extends AppCompatActivity {
     private static final int PROFILE_SETTING = 100000;
     private static final int DRAWER_ITEM_HOME_CODE = 1;
@@ -56,31 +71,74 @@ public class DrawerActivity extends AppCompatActivity {
     private static final int DRAWER_ITEM_FIND_TREASURE_CODE = 3;
     private static final int DRAWER_ITEM_SEARCH_CODE = 4;
     private static final int DRAWER_ITEM_SCAN_CODE = 5;
+    private static final int DRAWER_ITEM_LEADERBOARD_CODE = 6;
+
+    static Context mContext;
 
     //save our header or result
     private AccountHeader headerResult = null;
     private Drawer result = null;
     BookLoading loading;
+    private String mPoint;
+
+    private boolean mPointsChanged;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mContext = this;
+
+        mPointsChanged = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("pointsChanged" , true);
+
         //Remove line to test RTL support
         //getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
-
         initalizeViews();
+
+        fetchPointAndScore();
 
         createDrawer(savedInstanceState);
     }
 
+    private void fetchPointAndScore() {
+        if(true){
+            //fetch from api
+            ApiService service = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+            Call<LeaderBoard> call = service.getUserDetail("json");
+            call.enqueue(new Callback<LeaderBoard>() {
+                @Override
+                public void onResponse(Call<LeaderBoard> call, Response<LeaderBoard> response) {
+                    if(response.body() != null)
+                        Toast.makeText(DrawerActivity.this, response.body().toString(), Toast.LENGTH_SHORT).show();
+                        mPoint = String.valueOf(response.body().getPoints());
+                        PreferenceManager.getDefaultSharedPreferences(DrawerActivity.this).edit().putString("points", mPoint).apply();
+                        PreferenceManager.getDefaultSharedPreferences(DrawerActivity.this).edit().putBoolean("pointsChanged", false).apply();
+                        initalizeViews();
+                }
+
+                @Override
+                public void onFailure(Call<LeaderBoard> call, Throwable t) {
+
+                }
+            });
+
+
+
+        }
+    }
+
     private void initalizeViews() {
+        TextView pointsTextView = findViewById(R.id.points);
+        mPoint = PreferenceManager.getDefaultSharedPreferences(this).getString("points" , "0" );
+        pointsTextView.setText(mPoint);
+
         Button scanNowButton = findViewById(R.id.scan_now_btn);
         scanNowButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(DrawerActivity.this, QRCodeActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -142,7 +200,9 @@ public class DrawerActivity extends AppCompatActivity {
                         new PrimaryDrawerItem().withName(R.string.drawer_item_hunt_treasure).withDescription(R.string.drawer_item_hunt_treasure_desc).withIcon(FontAwesome.Icon.faw_map).withIdentifier(DRAWER_ITEM_HUNT_TREASURE_CODE).withSelectable(false),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_find_treasure).withDescription(R.string.drawer_item_find_treasure_desc).withIcon(FontAwesome.Icon.faw_list).withIdentifier(DRAWER_ITEM_FIND_TREASURE_CODE).withSelectable(false),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_search).withDescription(R.string.drawer_item_search_desc).withIcon(FontAwesome.Icon.faw_search).withIdentifier(DRAWER_ITEM_SEARCH_CODE).withSelectable(false),
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_scan).withDescription(R.string.drawer_item_scan_desc).withIcon(FontAwesome.Icon.faw_search).withIdentifier(DRAWER_ITEM_SCAN_CODE).withSelectable(false),
+                        new PrimaryDrawerItem().withName(R.string.drawer_item_scan).withDescription(R.string.drawer_item_scan_desc).withIcon(FontAwesome.Icon.faw_qrcode).withIdentifier(DRAWER_ITEM_SCAN_CODE).withSelectable(false),
+                        new SectionDrawerItem().withName("Community"),
+                        new PrimaryDrawerItem().withName("LeaderBoard").withDescription("See where you are, in your community.").withIcon(FontAwesome.Icon.faw_object_group).withIdentifier(DRAWER_ITEM_LEADERBOARD_CODE).withSelectable(false),
 
 //                        new PrimaryDrawerItem().withName(R.string.drawer_item_multi_drawer).withDescription(R.string.drawer_item_multi_drawer_desc).withIcon(FontAwesome.Icon.faw_gamepad).withIdentifier(3).withSelectable(false),
 //                        new PrimaryDrawerItem().withName(R.string.drawer_item_non_translucent_status_drawer).withDescription(R.string.drawer_item_non_translucent_status_drawer_desc).withIcon(FontAwesome.Icon.faw_eye).withIdentifier(4).withSelectable(false).withBadgeStyle(new BadgeStyle().withTextColor(Color.WHITE).withColorRes(R.color.md_red_700)),
@@ -193,6 +253,8 @@ public class DrawerActivity extends AppCompatActivity {
                                 intent = new Intent(DrawerActivity.this, SearchActivity.class);
 
                             } else if (drawerItem.getIdentifier() == DRAWER_ITEM_SCAN_CODE) {
+                                intent = new Intent(DrawerActivity.this, QRCodeActivity.class);
+                            }  else if (drawerItem.getIdentifier() == DRAWER_ITEM_LEADERBOARD_CODE) {
                                 intent = new Intent(DrawerActivity.this, QRCodeActivity.class);
                             }
                             /*else if (drawerItem.getIdentifier() == 2) {
@@ -282,6 +344,19 @@ public class DrawerActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
+    }
+    public static void showAlertDialog(String message){
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setMessage(message);
+        builder.setCancelable(false);
+        builder.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
 }

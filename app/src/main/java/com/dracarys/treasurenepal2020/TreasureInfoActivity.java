@@ -24,12 +24,16 @@ public class TreasureInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_treasure_info);
 
+        informationWebView = findViewById(R.id.webView);
+        webViewProgressBar = findViewById(R.id.webview_progressbar);
+
         informationWebView.setWebViewClient(new WebViewClient());    //the lines of code added
         informationWebView.setWebChromeClient(new WebChromeClient()); //same as above
         informationWebView.getSettings().setJavaScriptEnabled(true);
         informationWebView.canGoBack();
 
         informationWebView.loadUrl("https://www.welcomenepal.com/places-to-see/rara.html");
+
 
 
         webViewProgressBar.setVisibility(View.VISIBLE);
@@ -47,11 +51,15 @@ public class TreasureInfoActivity extends AppCompatActivity {
             }
 
             public void onPageFinished(WebView view, String url) {
-                webViewProgressBar.setVisibility(View.GONE);
+                if(webViewProgressBar != null){
+                    webViewProgressBar.setVisibility(View.GONE);
+                }
             }
 
             public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-               webViewProgressBar.setVisibility(View.GONE);
+               if(webViewProgressBar != null){
+                   webViewProgressBar.setVisibility(View.GONE);
+               }
             }
         });
 
@@ -70,6 +78,7 @@ public class TreasureInfoActivity extends AppCompatActivity {
             }
         });
     }
+
 
 
 }

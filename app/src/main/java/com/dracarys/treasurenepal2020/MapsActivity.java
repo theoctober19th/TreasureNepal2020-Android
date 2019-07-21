@@ -347,13 +347,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         TextView treasureName = rootView.findViewById(R.id.treasure_name);
         treasureName.setText(treasure.getName());
-        treasureName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MapsActivity.this, DrawerActivity.class);
-                startActivity(intent);
-            }
-        });
+
         TextView treasureAddress = rootView.findViewById(R.id.treasure_address);
         treasureAddress.setText(treasure.getAddress());
         TextView treasurePoints = rootView.findViewById(R.id.treasure_points);
@@ -364,6 +358,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onClick(View view) {
                 Intent intent = new Intent(MapsActivity.this, TreasureInfoActivity.class);
                 intent.putExtra("treasure", treasure);
+                startActivity(intent);
             }
         });
        // landmarkEditNameView = (EditText) textEntryView.findViewById(R.id.landmark_name_dialog_edit);
