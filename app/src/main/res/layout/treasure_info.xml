@@ -8,49 +8,69 @@
     android:background="@color/colorPrimary">
 
     <TextView
-        android:id="@+id/name_TextView"
+        android:id="@+id/treasure_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/cardview_light_background"
         android:paddingTop="8dp"
-        android:text="ABC Transport Pvt. Ltd."
+        android:text="UN Park"
         android:textAlignment="center"
         android:textSize="30sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:padding="16dp"/>
+        android:padding="8dp"/>
 
     <TextView
-        android:id="@+id/rating_textview"
+        android:id="@+id/treasure_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
-        android:text="★ ★ ★ ★ ★"
+        android:text="Babarmahal, Kathmandu"
         android:textAlignment="center"
         android:textColor="#FFDF00"
+        android:textSize="14sp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/treasure_name" />
+
+    <TextView
+        android:id="@+id/treasure_points"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#ff6d00"
+        android:paddingTop="8dp"
+        android:text="20 Points"
+        android:textAlignment="center"
         android:textSize="30sp"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/name_TextView" />
+        app:layout_constraintTop_toBottomOf="@id/treasure_address"
+        android:padding="8dp" />
 
-    <TextView
-        android:id="@+id/contact_number_textview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/cardview_light_background"
-        android:paddingTop="8dp"
-        android:text="9805886844"
-        android:textAlignment="center"
+
+    <Button
+        android:id="@+id/read_more_btn"
+
+        android:text="Read More!"
+        android:textColor="#FFFFFF"
         android:textSize="20sp"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:fontFamily="@font/nunito_sans_semibold"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/buttonshape"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+
+        app:layout_constraintTop_toBottomOf="@id/treasure_points"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rating_textview"
-        android:padding="8dp"/>
-
-
+        />
 
 
 

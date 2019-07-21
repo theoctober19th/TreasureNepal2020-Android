@@ -3,7 +3,9 @@ package com.dracarys.treasurenepal2020.entities;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Treasure {
+import java.io.Serializable;
+
+public class Treasure implements Serializable {
 
     @SerializedName("id")
     @Expose
@@ -127,4 +129,10 @@ public class Treasure {
         this.challengeType = challengeType;
     }
 
+    public Treasure(String name, Double latitude, Double longitude, Integer points) {
+        this.name = name;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.points = points;
+    }
 }

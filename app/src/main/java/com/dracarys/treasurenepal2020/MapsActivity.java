@@ -9,9 +9,13 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dracarys.treasurenepal2020.api.ApiService;
+import com.dracarys.treasurenepal2020.api.RetrofitClient;
+import com.dracarys.treasurenepal2020.entities.Treasure;
 import com.dracarys.treasurenepal2020.utils.Utils;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -42,6 +46,12 @@ import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.OnItemClickListener;
 import com.orhanobut.dialogplus.ViewHolder;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
     private static final int PROFILE_SETTING = 100000;
@@ -81,7 +91,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onClick(View view) {
                 //mMap.clear();
-                addRandomMarkers();
+                //addRandomMarkers();
+                showNearbyTreasures();
             }
         });
 
@@ -91,6 +102,31 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 takeMeWhereIAm();
             }
         });
+    }
+
+    private void showNearbyTreasures() {
+        /*Create handle for the RetrofitInstance interface*/
+        ApiService service = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+
+        Call<List<Treasure>> call = service.getTreasures("json");
+        call.enqueue(new Callback<List<Treasure>>() {
+
+            @Override
+            public void onResponse(Call<List<Treasure>> call, Response<List<Treasure>> response) {
+                createNearbyTreasureMarkers(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<Treasure>> call, Throwable t) {
+                Toast.makeText(MapsActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void createNearbyTreasureMarkers(List<Treasure> body) {
+        for(Treasure t: body){
+            addLocationMarker(t);
+        }
     }
 
 
@@ -294,43 +330,52 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
 
-    public void showTreasureInfoDialog(String title){
+    public void showTreasureInfoDialog(final Treasure treasure){
         DialogPlus dialog = DialogPlus.newDialog(this)
                 .setContentHolder(new ViewHolder(R.layout.treasure_info))
                 .setOnItemClickListener(new OnItemClickListener() {
                     @Override
                     public void onItemClick(DialogPlus dialog, Object item, View view, int position) {
-                        Toast.makeText(MapsActivity.this, "Clicked!", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MapsActivity.this, "Clicked!", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .setExpanded(true)  // This will enable the expand feature, (similar to android L share dialog)
                 .create();
         dialog.show();
 
-        final View asdf = dialog.getHolderView();
-        TextView tv = asdf.findViewById(R.id.name_TextView);
-        tv.setOnClickListener(new View.OnClickListener() {
+        final View rootView = dialog.getHolderView();
+
+        TextView treasureName = rootView.findViewById(R.id.treasure_name);
+        treasureName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MapsActivity.this, DrawerActivity.class);
                 startActivity(intent);
             }
         });
+        TextView treasureAddress = rootView.findViewById(R.id.treasure_address);
+        TextView treasurePoints = rootView.findViewById(R.id.treasure_points);
+        Button seeMoreBtn = rootView.findViewById(R.id.read_more_btn);
+        seeMoreBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MapsActivity.this, TreasureInfoActivity.class);
+                intent.putExtra("treasure", treasure);
+            }
+        });
        // landmarkEditNameView = (EditText) textEntryView.findViewById(R.id.landmark_name_dialog_edit);
 
     }
 
-    public void addRandomMarkers(){
-        addLocationMarker(27.6867787,85.3294549, "ABC", "1");
-        addLocationMarker(27.683043, 85.321209, "XYZ", "2");
-        addLocationMarker(27.674900, 85.337569, "MNO", "3");
-    }
+//    public void addRandomMarkers(){
+//        addLocationMarker(new Treasure(27.6867787,85.3294549, "ABC", "1"));
+//    }
 
-    public void addLocationMarker(/*Treasure treasure*/ double latitude, double longitude, String title, String tag){
+    public void addLocationMarker(/*Treasure treasure*/ Treasure treasure){
         // Creating a marker
-        MarkerOptions markerOptions = new MarkerOptions().icon(Utils.bitmapDescriptorFromVector(this, R.drawable.ic_monetization_on_red_24dp)).title(title);
+        MarkerOptions markerOptions = new MarkerOptions().icon(Utils.bitmapDescriptorFromVector(this, R.drawable.ic_monetization_on_red_24dp)).title(treasure.getName());
 
-        LatLng latLng = new LatLng(latitude, longitude);
+        LatLng latLng = new LatLng(treasure.getLatitude(), treasure.getLongitude());
         // Setting the position for the marker
         markerOptions.position(latLng);
 
@@ -338,15 +383,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         // mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
 
         // Placing a marker on the touched position
-        mMap.addMarker(markerOptions).setTag(tag);
+        mMap.addMarker(markerOptions).setTag(treasure);
     }
 
     @Override
     public boolean onMarkerClick(final Marker marker) {
 
         //marker.getId();
-        if(!marker.getTitle().equals("Your Location")){
-            showTreasureInfoDialog(marker.getTitle());
+        if(!marker.getTitle().equals("You are here")){
+            showTreasureInfoDialog((Treasure)marker.getTag());
         }
         return false;
     }
