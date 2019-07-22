@@ -16,6 +16,7 @@ import com.dracarys.treasurenepal2020.api.ApiService;
 import com.dracarys.treasurenepal2020.api.RetrofitClient;
 import com.dracarys.treasurenepal2020.entities.LeaderBoard;
 import com.dracarys.treasurenepal2020.entities.Treasure;
+import com.dracarys.treasurenepal2020.utils.Utils;
 
 import java.util.List;
 
@@ -37,31 +38,40 @@ public class LeaderboardActivity extends AppCompatActivity {
         initializeViews();
 
         /*Create handle for the RetrofitInstance interface*/
-        ApiService service = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+//        ApiService service = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+//
+//        Call<List<LeaderBoard>> call = service.getLeaderBoards("json");
+//        call.enqueue(new Callback<List<LeaderBoard>>() {
+//
+//            @Override
+//            public void onResponse(Call<List<LeaderBoard>> call, Response<List<LeaderBoard>> response) {
+//
+//                leaderBoardProgressBar.setVisibility(View.GONE);
+//                Log.d("BIKALPA", response.body().toString());
+//                generateDataList(response.body());
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<LeaderBoard>> call, Throwable t) {
+//
+//                leaderBoardProgressBar.setVisibility(View.GONE);
+//                Toast.makeText(LeaderboardActivity.this, t.toString(), Toast.LENGTH_LONG).show();
+//                //Toast.makeText(LeaderboardActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+//
+//            }
+//        });
 
-        Call<List<LeaderBoard>> call = service.getLeaderBoards("json");
-        call.enqueue(new Callback<List<LeaderBoard>>() {
-
-            @Override
-            public void onResponse(Call<List<LeaderBoard>> call, Response<List<LeaderBoard>> response) {
-
-                leaderBoardProgressBar.setVisibility(View.GONE);
-                Log.d("BIKALPA", response.body().toString());
-                generateDataList(response.body());
-
-            }
-
-            @Override
-            public void onFailure(Call<List<LeaderBoard>> call, Throwable t) {
-
-                leaderBoardProgressBar.setVisibility(View.GONE);
-                Toast.makeText(LeaderboardActivity.this, t.toString(), Toast.LENGTH_LONG).show();
-                //Toast.makeText(LeaderboardActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
-
-            }
-        });
+        generateDataList(Utils.getLeaderBoard());
     }
 
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        leaderboardAdapter.notifyDataSetChanged();
+    }
 
     private void initializeViews() {
         leaderboardRV = findViewById(R.id.leaderboard_recyclerview);
